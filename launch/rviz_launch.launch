@@ -1,0 +1,9 @@
+<!-- rviz_visual node launch file -->
+
+<launch>
+
+  <node pkg="nostop_rviz_visual" type="rviz_visual_node" name="rviz_visual_red_blue" required="true" output="screen" >
+    <param name="robot_name" value="red_blue"/>
+  </node>
+  
+</launch>
