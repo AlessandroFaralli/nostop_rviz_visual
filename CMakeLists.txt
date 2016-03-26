@@ -65,6 +65,14 @@ add_executable(rviz_visual_node ${rviz_visual_SOURCES})
 add_dependencies(rviz_visual_node nostop_rviz_visual_gencpp)
 target_link_libraries(rviz_visual_node ${catkin_LIBRARIES} base_math)
 
+
+
+
+add_executable(test_node src/test_node.cpp)
+add_dependencies(test_node nostop_rviz_visual_gencpp)
+target_link_libraries(test_node ${catkin_LIBRARIES} base_math)
+
+
 #############
 ## Install ##
 #############

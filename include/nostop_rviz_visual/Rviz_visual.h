@@ -22,12 +22,15 @@ namespace Robotics
 			ros::Subscriber m_rviz_sub;
 			ros::Publisher m_rviz_pub;
                         Mutex m_mutex;
+			std::string m_robot_name;
 			nav_msgs::Odometry m_odometry;
 
 		public:
-			Rviz_visual(std::string& robot_name); 
-			void final_odometry_readed(nav_msgs::Odometry msg);
+			Rviz_visual(); 
+			void final_odometry_readed(const nav_msgs::Odometry::ConstPtr& msg);
 			void odometry_publish();
+			void initialize(std::string& robot_name);
+			void marker_visualizer(const nav_msgs::Odometry::ConstPtr& msg);
 			~Rviz_visual(); 
 		};
 
