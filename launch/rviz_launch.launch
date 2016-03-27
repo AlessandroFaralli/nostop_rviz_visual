@@ -4,6 +4,17 @@
 
   <node pkg="nostop_rviz_visual" type="rviz_visual_node" name="rviz_visual_red_blue" required="true" output="screen" >
     <param name="robot_name" value="red_blue"/>
+    <param name="x_scale_factor" value="0.35"/>
+    <param name="y_scale_factor" value="0.01"/>
+    <param name="z_scale_factor" value="0.01"/>
+    <param name="R_color_value" value="0"/>
+    <param name="G_color_value" value="1"/>
+    <param name="B_color_value" value="0"/>
+    <param name="arrow_lifetime" value="2.5"/><!--second-->
+  </node>
+  
+  <node pkg="nostop_rviz_visual" type="test_node" name="test_node" output="screen" >
+      <param name="robot_name" value="red_blue"/>
   </node>
   
 </launch>

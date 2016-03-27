@@ -10,6 +10,8 @@
 #include "ros/ros.h"
 #include <Threads.h>
 #include <nav_msgs/Odometry.h>
+#include "visualization_msgs/Marker.h"
+
 
 
 namespace Robotics 
@@ -22,14 +24,17 @@ namespace Robotics
 			ros::Subscriber m_rviz_sub;
 			ros::Publisher m_rviz_pub;
                         Mutex m_mutex;
-			std::string m_robot_name;
+			std::string m_robot_name,m_world_frame_id;
+			std::vector<double> m_scale_factor,m_color_value;
+			ros::Duration m_lifetime;
 			nav_msgs::Odometry m_odometry;
+			visualization_msgs::Marker m_marker;
 
 		public:
 			Rviz_visual(); 
-			void final_odometry_readed(const nav_msgs::Odometry::ConstPtr& msg);
-			void odometry_publish();
-			void initialize(std::string& robot_name);
+			void initialize(std::string& robot_name,ros::Duration& lifetime, 
+					std::vector<double>& scale_factor,std::vector<double>& arrow_color,
+					std::string& w_frame_id);
 			void marker_visualizer(const nav_msgs::Odometry::ConstPtr& msg);
 			~Rviz_visual(); 
 		};
