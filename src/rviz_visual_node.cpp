@@ -25,11 +25,11 @@ int main(int argc, char **argv)
 	scale_factor.push_back(y_scale_factor);
 	l_node.param<double>("z_scale_factor",z_scale_factor,0.05);
 	scale_factor.push_back(z_scale_factor);
-	l_node.param<double>("R_color",R_color,0.5);
+	l_node.param<double>("R_color_value",R_color,0.5);
 	arrow_color.push_back(R_color);
-	l_node.param<double>("G_color",G_color,0.5);
+	l_node.param<double>("G_color_value",G_color,0.5);
 	arrow_color.push_back(G_color);
-	l_node.param<double>("B_color",B_color,0.5);
+	l_node.param<double>("B_color_value",B_color,0.5);
 	arrow_color.push_back(B_color);
 	ros::Duration lifetime(duration);
 	
@@ -37,6 +37,10 @@ int main(int argc, char **argv)
 	Robotics::GameTheory::Rviz_visual rviz_visual;
 	rviz_visual.initialize(robot_name,lifetime,scale_factor,arrow_color,world_frame_id);
 	
-	ros::spin();
+	while(l_node.ok())
+	{
+	  rviz_visual.marker_publisher();
+	  ros::spinOnce();
+	}
 	return 0;
 }

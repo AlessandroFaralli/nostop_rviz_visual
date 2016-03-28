@@ -2,22 +2,27 @@
 #include <nav_msgs/Odometry.h>
 #include <tf/transform_datatypes.h>
 #include <tf/transform_broadcaster.h>
+#include <std_msgs/Float64.h>
 
+struct msgI{
+  nav_msgs::Odometry odom;
+  std_msgs::Float64 yaw;
+} MSG;
 
-
-nav_msgs::Odometry odometry_msg_creation(std::string& robot_name)
+msgI odometry_msg_creation(std::string& robot_name)
 {
-  nav_msgs::Odometry msg;
-  msg.header.stamp = ros::Time::now();
-  msg.header.frame_id = "SR_world";
-  msg.child_frame_id = robot_name+"/base_link";
-  msg.pose.pose.position.x = sin(ros::Time::now().toSec());
-  msg.pose.pose.position.y = cos(ros::Time::now().toSec());
-  tf::Quaternion l_quat = tf::createQuaternionFromYaw(atan2(msg.pose.pose.position.y,msg.pose.pose.position.x));
-  msg.pose.pose.orientation.w = l_quat.getW();
-  msg.pose.pose.orientation.x = l_quat.getX();
-  msg.pose.pose.orientation.y = l_quat.getY();
-  msg.pose.pose.orientation.z = l_quat.getZ();
+  msgI msg;
+  msg.odom.header.stamp = ros::Time::now();
+  msg.odom.header.frame_id = "SR_world";
+  msg.odom.child_frame_id = robot_name+"/base_link";
+  msg.odom.pose.pose.position.x = sin(ros::Time::now().toSec());
+  msg.odom.pose.pose.position.y = cos(ros::Time::now().toSec());
+  msg.yaw.data = atan2(msg.odom.pose.pose.position.y,msg.odom.pose.pose.position.x);
+  tf::Quaternion l_quat = tf::createQuaternionFromYaw(msg.yaw.data);
+  msg.odom.pose.pose.orientation.w = l_quat.getW();
+  msg.odom.pose.pose.orientation.x = l_quat.getX();
+  msg.odom.pose.pose.orientation.y = l_quat.getY();
+  msg.odom.pose.pose.orientation.z = l_quat.getZ();
   return msg;
 }
 
@@ -43,19 +48,23 @@ int main(int argc,char **argv)
   ros::init(argc,argv,"test_node");
   geometry_msgs::TransformStamped marker_tf;
   tf::TransformBroadcaster tf_broadcasters;
-  ros::Publisher odometry_pub;
+  ros::Publisher odometry_pub,yaw_pub;
   ros::NodeHandle test_node("~");
   std::string robot_name;
   robot_name = "robot_name";
   test_node.getParam("robot_name",robot_name);
   odometry_pub = test_node.advertise<nav_msgs::Odometry>("/"+robot_name+"/localizer/odometry/final",10);
+  yaw_pub = test_node.advertise<std_msgs::Float64>("/"+robot_name+"/heading",10);
   ROS_INFO("TEST ON");
   ros::Rate r(50);
+  
+  
   while (ros::ok())
   {
-	nav_msgs::Odometry msg = odometry_msg_creation(robot_name);
-	tf_publishing(marker_tf,tf_broadcasters, msg,robot_name);
-	odometry_pub.publish<nav_msgs::Odometry>(msg);
+	msgI msg = odometry_msg_creation(robot_name);
+	tf_publishing(marker_tf,tf_broadcasters, msg.odom,robot_name);
+	odometry_pub.publish<nav_msgs::Odometry>(msg.odom);
+	yaw_pub.publish<std_msgs::Float64>(msg.yaw);
 	ros::spinOnce();
 	r.sleep();
   }
