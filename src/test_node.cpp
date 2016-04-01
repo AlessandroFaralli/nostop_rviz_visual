@@ -13,7 +13,7 @@ msgI odometry_msg_creation(std::string& robot_name)
 {
   msgI msg;
   msg.odom.header.stamp = ros::Time::now();
-  msg.odom.header.frame_id = "SR_world";
+  msg.odom.header.frame_id = "SRworld";
   msg.odom.child_frame_id = robot_name+"/base_link";
   msg.odom.pose.pose.position.x = sin(ros::Time::now().toSec());
   msg.odom.pose.pose.position.y = cos(ros::Time::now().toSec());

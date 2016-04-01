@@ -37,7 +37,9 @@ void Rviz_visual::marker_odom_setting(const nav_msgs::Odometry::ConstPtr& msg)
 	m_marker.id = ros::Time::now().toNSec();
 	m_marker.type = visualization_msgs::Marker::ARROW;
 	m_marker.action = visualization_msgs::Marker::ADD;
-// 	m_marker.pose.orientation = msg->pose.pose.orientation;
+	m_marker.pose.position.x = msg->pose.pose.position.x;
+	m_marker.pose.position.y = msg->pose.pose.position.y;
+	m_marker.pose.position.z = msg->pose.pose.position.z;
 	m_marker.lifetime = m_lifetime;
 	m_marker.scale.x = m_scale_factor.at(0);
 	m_marker.scale.y = m_scale_factor.at(1);
