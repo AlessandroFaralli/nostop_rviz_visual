@@ -1,7 +1,14 @@
 #include "ros/ros.h"
+#include <urdf/model.h>
 #include "Rviz_visual.h"
 #include "time.h"
 
+
+// #include <collada_urdf/collada_urdf.h>
+// #include <collada_parser/collada_parser.h>
+//  #include <collada_parser/collada_parser_plugin.h>
+//  
+ 
 using namespace std;
 using namespace Robotics;
 using namespace Robotics::GameTheory;
@@ -12,14 +19,25 @@ int main(int argc, char **argv)
 	ros::init(argc, argv, "rviz_visual");
 	ros::NodeHandle l_node("~");
 	
+	
+	////TEST
+// 	boost::shared_ptr<DAE> dom;
+// 	if (!collada_urdf::colladaFromUrdfFile("/home/niko/catkin_ws/src/nostop/nostop_launch_files/urdf/model.urdf", dom)) {
+// 	    ROS_ERROR("Failed to construct COLLADA DOM");
+// 	    return false;
+// 	}
+// 	collada_urdf::colladaToFile(dom, "~/filename.dae");
+// 
+// 	
+
 	// param settings
         std::string robot_name,world_frame_id;
 	int frequency;
 	double duration,x_scale_factor,y_scale_factor,z_scale_factor,R_color,G_color,B_color;
 	std::vector<double> scale_factor, arrow_color;
-	l_node.param<int>("frequency",frequency,50);
+	l_node.param<int>("frequency",frequency,5);
 	l_node.param<std::string>("robot_name",robot_name,"robot_name");
-	l_node.param<std::string>("world_frame_id",world_frame_id,"SRworld");
+	l_node.param<std::string>("world_frame_id",world_frame_id,"map");
 	l_node.param<double>("arrow_lifetime",duration,10);
 	l_node.param<double>("x_scale_factor",x_scale_factor,0.5);
 	scale_factor.push_back(x_scale_factor);

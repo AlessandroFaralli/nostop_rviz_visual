@@ -3,6 +3,7 @@
 <launch>
 
   <node pkg="nostop_rviz_visual" type="rviz_visual_node" name="rviz_visual_red_blue" required="true" output="screen" >
+    <param name="frequency" value="5"/>
     <param name="robot_name" value="red_blue"/>
     <param name="x_scale_factor" value="0.35"/>
     <param name="y_scale_factor" value="0.01"/>
@@ -17,4 +18,5 @@
       <param name="robot_name" value="red_blue"/>
   </node>
   
+  <node name="rviz" pkg="rviz" type="rviz" output="screen" />
 </launch>

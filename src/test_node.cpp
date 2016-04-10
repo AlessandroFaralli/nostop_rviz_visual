@@ -31,7 +31,7 @@ void tf_publishing(geometry_msgs::TransformStamped& marker_tf,tf::TransformBroad
 
       // publish over /tf
       marker_tf.header.stamp = ros::Time::now();
-      marker_tf.header.frame_id = "SR_world";
+      marker_tf.header.frame_id = "SRworld";
       marker_tf.child_frame_id = robot_name+"/base_link";
       marker_tf.transform.translation.x = 0.0;
       marker_tf.transform.translation.y = 0.0;

@@ -73,6 +73,14 @@ add_dependencies(test_node nostop_rviz_visual_gencpp)
 target_link_libraries(test_node ${catkin_LIBRARIES} base_math)
 
 
+# TF COMPOSITION
+set(tf_composition_node_SOURCES
+        src/tf_composition_node.cpp
+        src/Tf_composition.cpp
+)
+add_executable(tf_composition_node ${tf_composition_node_SOURCES})
+add_dependencies(tf_composition_node nostop_rviz_visual_gencpp)
+target_link_libraries(tf_composition_node ${catkin_LIBRARIES})
 #############
 ## Install ##
 #############
