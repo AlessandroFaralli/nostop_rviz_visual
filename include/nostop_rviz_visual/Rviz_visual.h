@@ -24,7 +24,7 @@ namespace Robotics
 			ros::NodeHandle m_rviz_node;
 			ros::Subscriber m_rviz_odom_sub,m_rviz_yaw_sub;
 			ros::Publisher m_rviz_pub;
-                        Mutex m_mutex;
+            Mutex m_mutex;
 			bool m_odom_marker,m_yaw_marker;
 			std::string m_robot_name,m_world_frame_id;
 			std::vector<double> m_scale_factor,m_color_value;

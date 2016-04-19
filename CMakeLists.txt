@@ -22,15 +22,21 @@ find_package(catkin REQUIRED COMPONENTS
   base_math
   tf
   nav_msgs
+  dynamic_reconfigure
 )
 
+find_package( OpenCV REQUIRED )
 
+generate_dynamic_reconfigure_options(
+   cfg/marker_position.cfg
+   )
 
 ## Generate added messages and services with any dependencies listed here
 #  generate_messages(
 #    DEPENDENCIES
 #    std_msgs  # Or other packages containing msgs
 #    )
+
 
 ###################################
 ## catkin specific configuration ##
@@ -68,19 +74,17 @@ target_link_libraries(rviz_visual_node ${catkin_LIBRARIES} base_math)
 
 
 
+add_executable(fixed_marker_node src/fixed_marker_node.cpp)
+add_dependencies(fixed_marker_node nostop_rviz_visual_gencpp nostop_rviz_visual_gencfg)
+target_link_libraries(fixed_marker_node ${catkin_LIBRARIES})
+
+
+
 add_executable(test_node src/test_node.cpp)
 add_dependencies(test_node nostop_rviz_visual_gencpp)
 target_link_libraries(test_node ${catkin_LIBRARIES} base_math)
 
 
-# TF COMPOSITION
-set(tf_composition_node_SOURCES
-        src/tf_composition_node.cpp
-        src/Tf_composition.cpp
-)
-add_executable(tf_composition_node ${tf_composition_node_SOURCES})
-add_dependencies(tf_composition_node nostop_rviz_visual_gencpp)
-target_link_libraries(tf_composition_node ${catkin_LIBRARIES})
 #############
 ## Install ##
 #############
